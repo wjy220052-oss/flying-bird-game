@@ -47,7 +47,7 @@ The way to play
    Download or clone this repository.
    ```bash
    git clone https://github.com/wjy220052-oss/flying-bird-game.git
-   
+   ```
    或者直接点击仓库页面上的 “Code” → Download ZIP 下载压缩包并解压。
    OR directly click the 'Code' and download the compressed file.
 2. 进入项目文件夹，找到 index.html。
