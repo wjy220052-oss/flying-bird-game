@@ -44,6 +44,14 @@ The way to play
 ## 🚀 本地运行方式（Run Locally）
 
 1. 下载或克隆本仓库：
-
+   Download or clone this repository.
    ```bash
-   git clone https://github.com/<你的用户名>/<你的仓库名>.git
+   git clone https://github.com/wjy220052-oss/flying-bird-game.git
+  或者直接点击仓库页面上的 “Code” → Download ZIP 下载压缩包并解压。
+   OR directly click the 'Code' and download the compressed file.
+2. 进入项目文件夹，找到 index.html。
+   Click the project folder and find the file named index.html
+3. 用浏览器打开 index.html：（如果你用 VS Code，也可以装一个 Live Server 插件来启动本地服务器）
+   Open the index.html on the browser
+4. 在浏览器中按 空格键 开始游戏。
+   Cilck the 'Space' and run the game.
