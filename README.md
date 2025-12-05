@@ -19,7 +19,7 @@ The way to play
 - Every time the bird succeeds in flying through the interspace,the score will add one.
   之后我们还会添加一些新的功能
 - Soon I'll supply some new functions.
-  比如添加音效（拍翅膀 / 得分 / 撞击）、添加开始菜单和重新开始按钮、根据分数提升游戏难度（加快水管移动速度、缩小空隙等）
+  比如添加音效（拍翅膀 / 得分 / 撞击）、添加开始菜单和重新开始按钮、根据分数提升游戏难度（加快水管移动速度、缩小空隙等）  #  Luckily,I have made it!
 - Such as sound effects,start menu,restart button and the dynamic game difficulty.
   当然，我也会把代码结构进一步拆分优化（例如用类/模块封装）
 - I'll also optimize the code structure such as encapsulated in modules
