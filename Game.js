@@ -2,7 +2,10 @@ const canvas = document.querySelector("#gameCanvas");
 canvas.width = 800;
 canvas.height = 600;
 const ctx = canvas.getContext("2d");
-
+const reStart = document.querySelector("#restart");
+if (reStart){
+  reStart.addEventListener("click", resetGame);
+}
 // 小鸟
 const bird = {
   x: 100,
@@ -15,8 +18,11 @@ const bird = {
 const gravity = 0.5;   // 重力
 const jumpStrength = -7; // 按一次的“跳跃速度”
 const pipeWidth = 60;
-const gapHeight = 150;
-const pipeSpeed = 2;
+const basegapHeight = 150;  //记录重开难度
+const basepipeSpeed = 2;
+// 变量（动态调整难度）
+let gapHeight = 150;
+let pipeSpeed = 2;
 
 // 水管数组（屏幕上三对水管）
 const pipes = [];
@@ -34,10 +40,13 @@ for (let i = 0; i < 3; i++) {
 let score = 0;
 let running = true;
 
-// 简单音效（未使用）
-// const flapSound = new Audio("flap.mp3");
-// const scoreSound = new Audio("score.mp3");
-// const hitSound = new Audio("hit.mp3");
+// 游戏开始
+let started = false;
+
+// 简单音效
+const flapSound = new Audio("flap.wav");
+const scoreSound = new Audio("score.wav");
+const hitSound = new Audio("hit.wav");
 
 // 工具：随机缺口高度
 function randomGapY() {
@@ -48,7 +57,14 @@ function randomGapY() {
 // 键盘控制：空格跳跃
 document.addEventListener("keydown", function(event) {
   if (event.code === "Space") {
+  if (!started) {
+    started = true;
+    running = true;
+  }
+   
     bird.vy = jumpStrength;
+    flapSound.currentTime = 0;   //将播放重置到开始，实现循环播放
+    flapSound.play();
   }
   if (!running && event.code === "Enter") {
     resetGame();
@@ -61,7 +77,10 @@ function resetGame() {
   bird.vy = 0;
   score = 0;
   running = true;
-  pipes.forEach((p, i) => {
+  started = true;
+  gapHeight = basegapHeight;  //重置难度
+  pipeSpeed = basepipeSpeed;
+  pipes.forEach(function(p,i){
     p.x = 300 + i * 200;
     p.gapY = randomGapY();
     p.scored = false;
@@ -69,10 +88,18 @@ function resetGame() {
 }
 
 // 碰撞检测：小鸟与水管或边界
+function stopGameWithhit(){
+  if (running) {
+    running = false;
+    hitSound.currentTime = 0;   //将播放重置到开始，实现循环播放
+    hitSound.play();
+  }
+    
+}
 function checkCollision() {
   // 上下边界
   if (bird.y - bird.radius < 0 || bird.y + bird.radius > canvas.height) {
-    running = false;
+    stopGameWithhit();
   }
 
   // 水管
@@ -86,16 +113,16 @@ function checkCollision() {
       bird.y + bird.radius < p.gapY + gapHeight;
 
     if (inPipeX && !inGapY) {
-      running = false;
+      stopGameWithhit();
     }
   });
 }
 
 // 主更新函数
 function update() {
-  if (!running) 
+  if (!running || !started) {
     return;
-
+  }  
   // 小鸟受重力影响
   bird.vy += gravity;
   bird.y += bird.vy;
@@ -108,7 +135,9 @@ function update() {
     if (!p.scored && p.x + pipeWidth < bird.x) {
       score++;
       p.scored = true;
-      // scoreSound.play();
+      scoreSound.currentTime = 0;   //将播放重置到开始，实现循环播放
+      scoreSound.play();
+      updateDifficulty();
     }
 
     // 水管完全离开屏幕 -> 移动到最右边并重置
@@ -118,6 +147,15 @@ function update() {
       p.scored = false;
     }
   });
+
+  // 难度调整
+  function updateDifficulty(){
+    pipeSpeed = basepipeSpeed + score / 100;
+
+    const minGapHeight = 80;  //最小空隙
+    const shrinkPerScore = 2; //每得2分缩小2像素
+    gapHeight = Math.max(minGapHeight, basegapHeight - shrinkPerScore * (score / 2));
+  }
 
   checkCollision();
 }
@@ -152,15 +190,27 @@ function draw() {
   // 画分数
   ctx.fillStyle = "white";
   ctx.font = "32px Arial";
+  ctx.textAlign = "center";
   ctx.fillText(score, canvas.width / 2, 60);
 
-  // Game Over 文本
+  // Game Over 文本 & 文本提示
+  ctx.font = "24px Arial";
   if (!running) {
     ctx.font = "24px Arial";
-    ctx.fillText("Game Over (Press Enter)", 50, canvas.height / 2);
+    ctx.fillText("Game Over (Press Enter)", canvas.width / 2, canvas.height / 2);
+  }else if (!started) {
+    ctx.fillText("Press Space to Start", canvas.width / 2, canvas.height / 2);
+  }
+
+  // 显示重新开始按钮
+  if (reStart){
+    if (!running && started) {
+      reStart.style.display = "block";
+    } else {
+      reStart.style.display = "none";
   }
 }
-
+}
 // 游戏循环
 function loop() {
   update();
@@ -168,5 +218,3 @@ function loop() {
   requestAnimationFrame(loop);
 }
 loop();
-
-
