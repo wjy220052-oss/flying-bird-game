@@ -275,7 +275,7 @@ function drawMenuScrean() {
 }
 function drawPausedScrean() {
   ctx.fillStyle = "rgba(0,0,0,0.2)";
-  ctx.fillRect(0,canvas.height / 2 - 50 , canvas.width, 80);
+  // ctx.fillRect(0,canvas.height / 2 - 50 , canvas.width, 80);
   ctx.fillStyle = "#fff";
   ctx.font = "24px Arial";
   ctx.textAlign = "center";
@@ -321,7 +321,7 @@ function drawGameScrean(){
   // Game Over 文本 & 文本提示
 function drawGameOverScrean() {
   ctx.fillStyle = "rgba(0,0,0,0.2)";
-  ctx.fillRect(0,canvas.height / 2 - 50 , canvas.width, 80);
+  // ctx.fillRect(0,canvas.height / 2 - 50 , canvas.width, 80);
   ctx.fillStyle = "#fff";
   ctx.font = "24px Arial";
   ctx.textAlign = "center";
