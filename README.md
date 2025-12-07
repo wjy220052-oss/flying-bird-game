@@ -25,7 +25,11 @@ The way to play
 - I'll also optimize the code structure such as encapsulated in modules
 ---
 
-## 🛠 技术栈 / Tech Stack
+---
+And I updated this game by adding more functions,such as pause and continue,creating gradient backgrounds,controling the hitting spped to prevent the insertion,recording the best score and so on.
+In this process,not only did I learn much syntax,but I also realized the importances of user interface and user experience and the object-oriented and so on.
+---
+##  🛠 技术栈 / Tech Stack
 
 - HTML5 `<canvas>`
 - CSS（简单的页面布局 & 背景样式）
@@ -40,6 +44,7 @@ The way to play
   - 简单的物理效果（重力、速度）
     Simple physical effects
 ---
+
 
 ## 🚀 本地运行方式（Run Locally）
 
